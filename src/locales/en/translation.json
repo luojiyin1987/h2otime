@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "H2O Time",
+    "subtitle": "Stay Hydrated, Stay Healthy"
+  },
+  "waterIntake": {
+    "title": "Record Water Intake",
+    "amount": "Amount",
+    "unit": "ml",
+    "submit": "Record",
+    "dailyGoal": "Daily Goal",
+    "goalUnit": "ml"
+  },
+  "progress": {
+    "title": "Today's Progress",
+    "consumed": "Consumed",
+    "goal": "Goal",
+    "low": "You're drinking too little water today, remember to drink more!",
+    "medium": "Keep going, stay hydrated!",
+    "high": "Well done! Keep it up!"
+  },
+  "reminder": {
+    "title": "Water Reminder",
+    "enable": "Enable Reminder",
+    "interval": "Reminder Interval",
+    "minutes": "minutes",
+    "lastNotification": "Last reminder at",
+    "notification": {
+      "title": "Time to Drink Water",
+      "body": "Stay hydrated, it's important!"
+    }
+  },
+  "history": {
+    "title": "Drinking History",
+    "noRecords": "No records yet, start tracking your water intake!"
+  }
+} 

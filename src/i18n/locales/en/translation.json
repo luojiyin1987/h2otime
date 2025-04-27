@@ -1,0 +1,12 @@
+{
+  "form": {
+    "title": "Add Water Intake",
+    "amount": "Amount (ml)",
+    "dailyGoal": "Daily Goal (ml)",
+    "submit": "Add"
+  },
+  "list": {
+    "title": "Water Intake History",
+    "total": "Total Intake"
+  }
+} 

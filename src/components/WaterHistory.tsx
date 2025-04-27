@@ -6,7 +6,8 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Chip
+  Chip,
+  Button
 } from '@mui/material';
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 
@@ -40,13 +41,41 @@ function WaterHistory({ history }: WaterHistoryProps) {
     return groups;
   };
 
+  const handleDeleteAll = () => {
+    if (window.confirm('确定要删除所有饮水记录吗？')) {
+      localStorage.removeItem('waterHistory');
+      window.location.reload();
+    }
+  };
+
   const groupedHistory = groupByDate(history);
 
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        饮水记录
-      </Typography>
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        mb: 3,
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        pb: 2
+      }}>
+        <Typography variant="h6" component="h3">饮水记录</Typography>
+        <Button 
+          variant="contained" 
+          color="error"
+          onClick={handleDeleteAll}
+          sx={{ 
+            minWidth: '120px',
+            '&:hover': {
+              backgroundColor: 'error.dark'
+            }
+          }}
+        >
+          删除所有记录
+        </Button>
+      </Box>
       
       {Object.entries(groupedHistory).map(([date, records]) => (
         <Box key={date} sx={{ mb: 2 }}>
