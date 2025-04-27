@@ -5,50 +5,77 @@ import {
   Switch,
   FormControlLabel,
   Slider,
-  Alert
+  Alert,
+  Snackbar
 } from '@mui/material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import InfoIcon from '@mui/icons-material/Info';
 
 function WaterReminder() {
   const [reminderEnabled, setReminderEnabled] = useState<boolean>(false);
   const [reminderInterval, setReminderInterval] = useState<number>(60); // minutes
   const [lastNotification, setLastNotification] = useState<Date | null>(null);
+  const [notificationsSupported, setNotificationsSupported] = useState<boolean>(true);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [showIosNotice, setShowIosNotice] = useState<boolean>(false);
+
+  // 检查通知 API 是否可用
+  useEffect(() => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const notificationsAvailable = 'Notification' in window;
+    
+    setNotificationsSupported(notificationsAvailable && !isIOS);
+    setShowIosNotice(isIOS);
+  }, []);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (reminderEnabled) {
       intervalId = setInterval(() => {
-        if (Notification.permission === 'granted') {
+        if (notificationsSupported && Notification.permission === 'granted') {
+          // 标准网页通知 - 适用于大多数浏览器
           new Notification('喝水提醒', {
             body: '该喝水了！保持水分很重要。',
             icon: '/water-icon.png'
           });
-          setLastNotification(new Date());
+        } else {
+          // 针对不支持 Notifications API 的浏览器(包括iOS)的替代方案
+          setSnackbarOpen(true);
         }
+        setLastNotification(new Date());
       }, reminderInterval * 60 * 1000);
     }
 
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [reminderEnabled, reminderInterval]);
+  }, [reminderEnabled, reminderInterval, notificationsSupported]);
 
   const handleReminderToggle = () => {
-    if (!reminderEnabled && Notification.permission !== 'granted') {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          setReminderEnabled(true);
-        }
-      });
+    if (!reminderEnabled) {
+      if (notificationsSupported && Notification.permission !== 'granted') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            setReminderEnabled(true);
+          }
+        });
+      } else {
+        // 对于不支持通知的浏览器，无需请求权限
+        setReminderEnabled(true);
+      }
     } else {
-      setReminderEnabled(!reminderEnabled);
+      setReminderEnabled(false);
     }
   };
 
   const handleIntervalChange = (_event: Event, newValue: number | number[]) => {
     setReminderInterval(newValue as number);
     localStorage.setItem('reminderInterval', (newValue as number).toString());
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -59,6 +86,17 @@ function WaterReminder() {
           喝水提醒
         </Typography>
       </Box>
+
+      {showIosNotice && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <InfoIcon sx={{ mr: 1 }} />
+            <Typography>
+              检测到iOS设备。由于iOS不支持网页通知，将使用应用内提醒替代。
+            </Typography>
+          </Box>
+        </Alert>
+      )}
 
       <FormControlLabel
         control={
@@ -98,8 +136,17 @@ function WaterReminder() {
           上次提醒时间: {lastNotification.toLocaleTimeString()}
         </Alert>
       )}
+
+      {/* 适用于iOS设备的应用内提醒 */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="该喝水了！保持水分很重要。"
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
     </Box>
   );
 }
 
-export default WaterReminder; 
+export default WaterReminder;
