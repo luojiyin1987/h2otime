@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from "react";
 import {
   Box,
   TextField,
@@ -6,9 +6,9 @@ import {
   Typography,
   Slider,
   Grid,
-  InputAdornment
-} from '@mui/material';
-import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
+  InputAdornment,
+} from "@mui/material";
+import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
 
 interface WaterIntakeFormProps {
   onSubmit: (amount: string) => void;
@@ -16,20 +16,24 @@ interface WaterIntakeFormProps {
   setDailyGoal: (goal: number) => void;
 }
 
-function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormProps) {
-  const [amount, setAmount] = useState<string>('');
+function WaterIntakeForm({
+  onSubmit,
+  dailyGoal,
+  setDailyGoal,
+}: WaterIntakeFormProps) {
+  const [amount, setAmount] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amount && parseInt(amount) > 0) {
       onSubmit(amount);
-      setAmount('');
+      setAmount("");
     }
   };
 
   const handleGoalChange = (_event: Event, newValue: number | number[]) => {
     setDailyGoal(newValue as number);
-    localStorage.setItem('dailyGoal', (newValue as number).toString());
+    localStorage.setItem("dailyGoal", (newValue as number).toString());
   };
 
   return (
@@ -37,7 +41,7 @@ function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormP
       <Typography variant="h6" gutterBottom>
         记录饮水
       </Typography>
-      
+
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -52,7 +56,7 @@ function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormP
             required
           />
         </Grid>
-        
+
         <Grid item xs={12} sm={6}>
           <Button
             fullWidth
@@ -60,16 +64,14 @@ function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormP
             color="primary"
             type="submit"
             startIcon={<LocalDrinkIcon />}
-            sx={{ height: '56px' }}
+            sx={{ height: "56px" }}
           >
             记录
           </Button>
         </Grid>
 
         <Grid item xs={12}>
-          <Typography gutterBottom>
-            每日目标: {dailyGoal}ml
-          </Typography>
+          <Typography gutterBottom>每日目标: {dailyGoal}ml</Typography>
           <Slider
             value={dailyGoal}
             onChange={handleGoalChange}
@@ -77,10 +79,10 @@ function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormP
             max={4000}
             step={100}
             marks={[
-              { value: 1000, label: '1L' },
-              { value: 2000, label: '2L' },
-              { value: 3000, label: '3L' },
-              { value: 4000, label: '4L' }
+              { value: 1000, label: "1L" },
+              { value: 2000, label: "2L" },
+              { value: 3000, label: "3L" },
+              { value: 4000, label: "4L" },
             ]}
           />
         </Grid>
@@ -89,4 +91,4 @@ function WaterIntakeForm({ onSubmit, dailyGoal, setDailyGoal }: WaterIntakeFormP
   );
 }
 
-export default WaterIntakeForm; 
+export default WaterIntakeForm;
