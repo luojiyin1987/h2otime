@@ -11,15 +11,17 @@ import {
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNotifications } from "../hooks/useNotifications";
+import { useTranslation } from "react-i18next";
 
 function WaterReminder() {
+  const { t } = useTranslation();
   const [reminderEnabled, setReminderEnabled] = useState<boolean>(false);
   const [reminderInterval, setReminderInterval] = useState<number>(60); // minutes
   const [notificationsSupported, setNotificationsSupported] =
     useState<boolean>(true);
   const [showIosNotice, setShowIosNotice] = useState<boolean>(false);
 
-  // 检查通知 API 是否可用
+  // Check if notifications API is available
   useEffect(() => {
     const isIOS =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
@@ -44,7 +46,6 @@ function WaterReminder() {
           }
         });
       } else {
-        // 对于不支持通知的浏览器，无需请求权限
         setReminderEnabled(true);
       }
     } else {
@@ -65,16 +66,14 @@ function WaterReminder() {
     <Box sx={{ mt: 2 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <NotificationsActiveIcon sx={{ mr: 1, color: "primary.main" }} />
-        <Typography variant="h6">喝水提醒</Typography>
+        <Typography variant="h6">{t("reminder.title")}</Typography>
       </Box>
 
       {showIosNotice && (
         <Alert severity="info" sx={{ mb: 2 }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <InfoIcon sx={{ mr: 1 }} />
-            <Typography>
-              检测到iOS设备。由于iOS不支持网页通知，将使用应用内提醒替代。
-            </Typography>
+            <Typography>{t("reminder.iosNotice")}</Typography>
           </Box>
         </Alert>
       )}
@@ -87,13 +86,13 @@ function WaterReminder() {
             color="primary"
           />
         }
-        label="启用提醒"
+        label={t("reminder.enable")}
       />
 
       {reminderEnabled && (
         <Box sx={{ mt: 2 }}>
           <Typography gutterBottom>
-            提醒间隔: {reminderInterval} 分钟
+            {t("reminder.interval", { interval: reminderInterval })}
           </Typography>
           <Slider
             value={reminderInterval}
@@ -102,11 +101,11 @@ function WaterReminder() {
             max={180}
             step={30}
             marks={[
-              { value: 30, label: "30分钟" },
-              { value: 60, label: "1小时" },
-              { value: 90, label: "1.5小时" },
-              { value: 120, label: "2小时" },
-              { value: 180, label: "3小时" },
+              { value: 30, label: t("reminder.intervals.30min") },
+              { value: 60, label: t("reminder.intervals.1hour") },
+              { value: 90, label: t("reminder.intervals.1.5hour") },
+              { value: 120, label: t("reminder.intervals.2hour") },
+              { value: 180, label: t("reminder.intervals.3hour") },
             ]}
           />
         </Box>
@@ -114,16 +113,17 @@ function WaterReminder() {
 
       {lastNotification && (
         <Alert severity="info" sx={{ mt: 2 }}>
-          上次提醒时间: {lastNotification.toLocaleTimeString()}
+          {t("reminder.lastReminder", {
+            time: lastNotification.toLocaleTimeString(),
+          })}
         </Alert>
       )}
 
-      {/* 适用于iOS设备的应用内提醒 */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        message="该喝水了！保持水分很重要。"
+        message={t("reminder.notification")}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       />
     </Box>

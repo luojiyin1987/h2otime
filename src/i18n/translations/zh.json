@@ -21,5 +21,20 @@
     "deleteAll": "删除所有记录",
     "confirmDelete": "确定要删除所有饮水记录吗？",
     "noRecords": "还没有记录，开始记录你的饮水吧！"
+  },
+  "reminder": {
+    "title": "喝水提醒",
+    "enable": "启用提醒",
+    "interval": "提醒间隔: {interval} 分钟",
+    "iosNotice": "检测到iOS设备。由于iOS不支持网页通知，将使用应用内提醒替代。",
+    "lastReminder": "上次提醒时间: {time}",
+    "notification": "该喝水了！保持水分很重要。",
+    "intervals": {
+      "30min": "30分钟",
+      "1hour": "1小时",
+      "1.5hour": "1.5小时",
+      "2hour": "2小时",
+      "3hour": "3小时"
+    }
   }
 }
