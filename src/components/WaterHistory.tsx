@@ -10,6 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
+import { useTranslation } from "react-i18next";
 
 interface WaterRecord {
   date: string;
@@ -21,9 +22,11 @@ interface WaterHistoryProps {
 }
 
 function WaterHistory({ history }: WaterHistoryProps) {
+  const { t, i18n } = useTranslation();
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString("zh-CN", {
+    return date.toLocaleTimeString(i18n.language === "zh" ? "zh-CN" : "en-US", {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -44,7 +47,7 @@ function WaterHistory({ history }: WaterHistoryProps) {
   };
 
   const handleDeleteAll = () => {
-    if (window.confirm("确定要删除所有饮水记录吗？")) {
+    if (window.confirm(t("history.confirmDelete"))) {
       localStorage.removeItem("waterHistory");
       window.location.reload();
     }
@@ -66,7 +69,7 @@ function WaterHistory({ history }: WaterHistoryProps) {
         }}
       >
         <Typography variant="h6" component="h3">
-          饮水记录
+          {t("history.title")}
         </Typography>
         <Button
           variant="contained"
@@ -79,18 +82,21 @@ function WaterHistory({ history }: WaterHistoryProps) {
             },
           }}
         >
-          删除所有记录
+          {t("history.deleteAll")}
         </Button>
       </Box>
 
       {Object.entries(groupedHistory).map(([date, records]) => (
         <Box key={date} sx={{ mb: 2 }}>
           <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-            {new Date(date).toLocaleDateString("zh-CN", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {new Date(date).toLocaleDateString(
+              i18n.language === "zh" ? "zh-CN" : "en-US",
+              {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              },
+            )}
           </Typography>
 
           <List>
@@ -125,7 +131,7 @@ function WaterHistory({ history }: WaterHistoryProps) {
 
       {history.length === 0 && (
         <Typography color="text.secondary" align="center">
-          还没有记录，开始记录你的饮水吧！
+          {t("history.noRecords")}
         </Typography>
       )}
     </Box>
