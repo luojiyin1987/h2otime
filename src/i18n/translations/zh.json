@@ -15,5 +15,11 @@
     "lowIntake": "今天喝水有点少哦，记得多喝水！",
     "mediumIntake": "继续加油，保持水分！",
     "highIntake": "做得好！继续保持！"
+  },
+  "history": {
+    "title": "饮水记录",
+    "deleteAll": "删除所有记录",
+    "confirmDelete": "确定要删除所有饮水记录吗？",
+    "noRecords": "还没有记录，开始记录你的饮水吧！"
   }
 }
