@@ -21,5 +21,20 @@
     "deleteAll": "Delete All Records",
     "confirmDelete": "Are you sure you want to delete all water intake records?",
     "noRecords": "No records yet, start tracking your water intake!"
+  },
+  "reminder": {
+    "title": "Water Reminder",
+    "enable": "Enable Reminder",
+    "interval": "Reminder Interval: {interval} minutes",
+    "iosNotice": "iOS device detected. Web notifications are not supported on iOS, in-app reminders will be used instead.",
+    "lastReminder": "Last reminder time: {time}",
+    "notification": "Time to drink water! Staying hydrated is important.",
+    "intervals": {
+      "30min": "30 min",
+      "1hour": "1 hour",
+      "1.5hour": "1.5 hours",
+      "2hour": "2 hours",
+      "3hour": "3 hours"
+    }
   }
 }
