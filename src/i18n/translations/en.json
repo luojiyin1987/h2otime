@@ -1,0 +1,25 @@
+{
+  "app": {
+    "title": "H2O Time",
+    "subtitle": "Stay Hydrated, Stay Healthy"
+  },
+  "form": {
+    "recordIntake": "Record Water Intake",
+    "waterAmount": "Water Amount",
+    "submit": "Submit",
+    "dailyGoal": "Daily Goal"
+  },
+  "progress": {
+    "title": "Today's Progress",
+    "consumed": "Consumed",
+    "lowIntake": "Your water intake is low today, remember to drink more!",
+    "mediumIntake": "Keep going, stay hydrated!",
+    "highIntake": "Great job! Keep it up!"
+  },
+  "history": {
+    "title": "Water History",
+    "deleteAll": "Delete All Records",
+    "confirmDelete": "Are you sure you want to delete all water intake records?",
+    "noRecords": "No records yet, start tracking your water intake!"
+  }
+}

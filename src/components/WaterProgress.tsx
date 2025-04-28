@@ -5,6 +5,7 @@ import {
   LinearProgress,
   CircularProgress,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface WaterProgressProps {
   current: number;
@@ -13,6 +14,8 @@ interface WaterProgressProps {
 }
 
 function WaterProgress({ current, goal, progress }: WaterProgressProps) {
+  const { t } = useTranslation();
+
   const getProgressColor = (
     progress: number,
   ): "error" | "warning" | "success" => {
@@ -24,7 +27,7 @@ function WaterProgress({ current, goal, progress }: WaterProgressProps) {
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
-        今日进度
+        {t("progress.title")}
       </Typography>
 
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
@@ -59,7 +62,7 @@ function WaterProgress({ current, goal, progress }: WaterProgressProps) {
 
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="body1">
-            已饮用: {current}ml / {goal}ml
+            {t("progress.consumed")}: {current}ml / {goal}ml
           </Typography>
           <LinearProgress
             variant="determinate"
@@ -72,17 +75,17 @@ function WaterProgress({ current, goal, progress }: WaterProgressProps) {
 
       {progress < 30 && (
         <Typography color="error" variant="body2">
-          今天喝水有点少哦，记得多喝水！
+          {t("progress.lowIntake")}
         </Typography>
       )}
       {progress >= 30 && progress < 70 && (
         <Typography color="warning.main" variant="body2">
-          继续加油，保持水分！
+          {t("progress.mediumIntake")}
         </Typography>
       )}
       {progress >= 70 && (
         <Typography color="success.main" variant="body2">
-          做得好！继续保持！
+          {t("progress.highIntake")}
         </Typography>
       )}
     </Box>

@@ -1,0 +1,19 @@
+{
+  "app": {
+    "title": "H2O Time",
+    "subtitle": "保持水分，保持健康"
+  },
+  "form": {
+    "recordIntake": "记录饮水",
+    "waterAmount": "饮水量",
+    "submit": "记录",
+    "dailyGoal": "每日目标"
+  },
+  "progress": {
+    "title": "今日进度",
+    "consumed": "已饮用",
+    "lowIntake": "今天喝水有点少哦，记得多喝水！",
+    "mediumIntake": "继续加油，保持水分！",
+    "highIntake": "做得好！继续保持！"
+  }
+}

@@ -9,6 +9,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
+import { useTranslation } from "react-i18next";
 
 interface WaterIntakeFormProps {
   onSubmit: (amount: string) => void;
@@ -21,6 +22,7 @@ function WaterIntakeForm({
   dailyGoal,
   setDailyGoal,
 }: WaterIntakeFormProps) {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -39,14 +41,14 @@ function WaterIntakeForm({
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Typography variant="h6" gutterBottom>
-        记录饮水
+        {t("form.recordIntake")}
       </Typography>
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="饮水量"
+            label={t("form.waterAmount")}
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -66,24 +68,20 @@ function WaterIntakeForm({
             startIcon={<LocalDrinkIcon />}
             sx={{ height: "56px" }}
           >
-            记录
+            {t("form.submit")}
           </Button>
         </Grid>
 
         <Grid item xs={12}>
-          <Typography gutterBottom>每日目标: {dailyGoal}ml</Typography>
+          <Typography gutterBottom>{t("form.dailyGoal")}</Typography>
           <Slider
             value={dailyGoal}
             onChange={handleGoalChange}
-            min={1000}
-            max={4000}
+            min={500}
+            max={5000}
             step={100}
-            marks={[
-              { value: 1000, label: "1L" },
-              { value: 2000, label: "2L" },
-              { value: 3000, label: "3L" },
-              { value: 4000, label: "4L" },
-            ]}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `${value}ml`}
           />
         </Grid>
       </Grid>

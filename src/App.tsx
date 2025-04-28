@@ -7,10 +7,12 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import WaterIntakeForm from "./components/WaterIntakeForm";
 import WaterProgress from "./components/WaterProgress";
 import WaterHistory from "./components/WaterHistory";
 import WaterReminder from "./components/WaterReminder";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 interface WaterRecord {
   date: string;
@@ -29,6 +31,7 @@ const theme = createTheme({
 });
 
 function App() {
+  const { t } = useTranslation();
   const [dailyGoal, setDailyGoal] = useState<number>(2000); // Default 2000ml
   const [todayIntake, setTodayIntake] = useState<number>(0);
   const [history, setHistory] = useState<WaterRecord[]>([]);
@@ -80,8 +83,11 @@ function App() {
             align="center"
             color="primary"
           >
-            H2O Time
+            {t("app.title")}
           </Typography>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+            <LanguageSwitcher />
+          </Box>
           <Typography
             variant="h6"
             component="h2"
@@ -89,7 +95,7 @@ function App() {
             align="center"
             color="text.secondary"
           >
-            保持水分，保持健康
+            {t("app.subtitle")}
           </Typography>
 
           <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
