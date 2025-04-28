@@ -1,4 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lint-staged
+# Windows compatibility
+if [ -f package.json ]; then
+  # Use cross-env if available
+  if [ -f node_modules/.bin/cross-env ]; then
+    npx cross-env-shell "npx lint-staged"
+  else
+    npx lint-staged
+  fi
+fi
