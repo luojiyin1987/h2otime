@@ -10,14 +10,13 @@ import {
 } from "@mui/material";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import InfoIcon from "@mui/icons-material/Info";
+import { useNotifications } from "../hooks/useNotifications";
 
 function WaterReminder() {
   const [reminderEnabled, setReminderEnabled] = useState<boolean>(false);
   const [reminderInterval, setReminderInterval] = useState<number>(60); // minutes
-  const [lastNotification, setLastNotification] = useState<Date | null>(null);
   const [notificationsSupported, setNotificationsSupported] =
     useState<boolean>(true);
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [showIosNotice, setShowIosNotice] = useState<boolean>(false);
 
   // 检查通知 API 是否可用
@@ -30,32 +29,11 @@ function WaterReminder() {
     setShowIosNotice(isIOS);
   }, []);
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    if (reminderEnabled) {
-      intervalId = setInterval(
-        () => {
-          if (notificationsSupported && Notification.permission === "granted") {
-            // 标准网页通知 - 适用于大多数浏览器
-            new Notification("喝水提醒", {
-              body: "该喝水了！保持水分很重要。",
-              icon: "/water-icon.png",
-            });
-          } else {
-            // 针对不支持 Notifications API 的浏览器(包括iOS)的替代方案
-            setSnackbarOpen(true);
-          }
-          setLastNotification(new Date());
-        },
-        reminderInterval * 60 * 1000,
-      );
-    }
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [reminderEnabled, reminderInterval, notificationsSupported]);
+  const { lastNotification, snackbarOpen, setSnackbarOpen } = useNotifications({
+    reminderEnabled,
+    reminderInterval,
+    notificationsSupported,
+  });
 
   const handleReminderToggle = () => {
     if (!reminderEnabled) {
