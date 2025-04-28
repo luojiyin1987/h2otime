@@ -6,6 +6,8 @@ import {
   Paper,
   ThemeProvider,
   createTheme,
+  AppBar,
+  Toolbar,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import WaterIntakeForm from "./components/WaterIntakeForm";
@@ -74,6 +76,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <AppBar position="static" color="transparent" elevation={0}>
+        <Toolbar sx={{ justifyContent: "flex-end" }}>
+          <LanguageSwitcher />
+        </Toolbar>
+      </AppBar>
       <Container maxWidth="md">
         <Box sx={{ my: 4 }}>
           <Typography
@@ -85,9 +92,6 @@ function App() {
           >
             {t("app.title")}
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-            <LanguageSwitcher />
-          </Box>
           <Typography
             variant="h6"
             component="h2"
