@@ -1,14 +1,14 @@
-import React from 'react';
-import { 
-  List, 
-  ListItem, 
-  ListItemText, 
+import React from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
   Typography,
   Box,
-  IconButton
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useTranslation } from 'react-i18next';
+  IconButton,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useTranslation } from "react-i18next";
 
 interface WaterIntake {
   id: string;
@@ -22,39 +22,46 @@ interface WaterIntakeListProps {
   dailyGoal: number;
 }
 
-const WaterIntakeList: React.FC<WaterIntakeListProps> = ({ 
-  intakes, 
+const WaterIntakeList: React.FC<WaterIntakeListProps> = ({
+  intakes,
   onDelete,
-  dailyGoal 
+  dailyGoal,
 }) => {
   const { t } = useTranslation();
-  
-  const totalIntake = intakes.reduce((sum, intake) => sum + parseInt(intake.amount), 0);
+
+  const totalIntake = intakes.reduce(
+    (sum, intake) => sum + parseInt(intake.amount),
+    0,
+  );
   const progress = (totalIntake / dailyGoal) * 100;
 
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
-        {t('list.title')}
+        {t("list.title")}
       </Typography>
-      
+
       <Box sx={{ mb: 2 }}>
         <Typography variant="body1">
-          {t('list.total')}: {totalIntake}ml / {dailyGoal}ml
+          {t("list.total")}: {totalIntake}ml / {dailyGoal}ml
         </Typography>
-        <Box sx={{ 
-          width: '100%', 
-          height: 20, 
-          bgcolor: 'grey.200',
-          borderRadius: 1,
-          overflow: 'hidden'
-        }}>
-          <Box sx={{ 
-            width: `${Math.min(progress, 100)}%`, 
-            height: '100%', 
-            bgcolor: 'primary.main',
-            transition: 'width 0.3s ease-in-out'
-          }} />
+        <Box
+          sx={{
+            width: "100%",
+            height: 20,
+            bgcolor: "grey.200",
+            borderRadius: 1,
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              width: `${Math.min(progress, 100)}%`,
+              height: "100%",
+              bgcolor: "primary.main",
+              transition: "width 0.3s ease-in-out",
+            }}
+          />
         </Box>
       </Box>
 
@@ -63,8 +70,8 @@ const WaterIntakeList: React.FC<WaterIntakeListProps> = ({
           <ListItem
             key={intake.id}
             secondaryAction={
-              <IconButton 
-                edge="end" 
+              <IconButton
+                edge="end"
                 aria-label="delete"
                 onClick={() => onDelete(intake.id)}
               >
@@ -83,4 +90,4 @@ const WaterIntakeList: React.FC<WaterIntakeListProps> = ({
   );
 };
 
-export default WaterIntakeList; 
+export default WaterIntakeList;

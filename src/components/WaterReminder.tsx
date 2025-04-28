@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -6,24 +6,26 @@ import {
   FormControlLabel,
   Slider,
   Alert,
-  Snackbar
-} from '@mui/material';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import InfoIcon from '@mui/icons-material/Info';
+  Snackbar,
+} from "@mui/material";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import InfoIcon from "@mui/icons-material/Info";
 
 function WaterReminder() {
   const [reminderEnabled, setReminderEnabled] = useState<boolean>(false);
   const [reminderInterval, setReminderInterval] = useState<number>(60); // minutes
   const [lastNotification, setLastNotification] = useState<Date | null>(null);
-  const [notificationsSupported, setNotificationsSupported] = useState<boolean>(true);
+  const [notificationsSupported, setNotificationsSupported] =
+    useState<boolean>(true);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [showIosNotice, setShowIosNotice] = useState<boolean>(false);
 
   // 检查通知 API 是否可用
   useEffect(() => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-    const notificationsAvailable = 'Notification' in window;
-    
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const notificationsAvailable = "Notification" in window;
+
     setNotificationsSupported(notificationsAvailable && !isIOS);
     setShowIosNotice(isIOS);
   }, []);
@@ -32,19 +34,22 @@ function WaterReminder() {
     let intervalId: NodeJS.Timeout;
 
     if (reminderEnabled) {
-      intervalId = setInterval(() => {
-        if (notificationsSupported && Notification.permission === 'granted') {
-          // 标准网页通知 - 适用于大多数浏览器
-          new Notification('喝水提醒', {
-            body: '该喝水了！保持水分很重要。',
-            icon: '/water-icon.png'
-          });
-        } else {
-          // 针对不支持 Notifications API 的浏览器(包括iOS)的替代方案
-          setSnackbarOpen(true);
-        }
-        setLastNotification(new Date());
-      }, reminderInterval * 60 * 1000);
+      intervalId = setInterval(
+        () => {
+          if (notificationsSupported && Notification.permission === "granted") {
+            // 标准网页通知 - 适用于大多数浏览器
+            new Notification("喝水提醒", {
+              body: "该喝水了！保持水分很重要。",
+              icon: "/water-icon.png",
+            });
+          } else {
+            // 针对不支持 Notifications API 的浏览器(包括iOS)的替代方案
+            setSnackbarOpen(true);
+          }
+          setLastNotification(new Date());
+        },
+        reminderInterval * 60 * 1000,
+      );
     }
 
     return () => {
@@ -54,9 +59,9 @@ function WaterReminder() {
 
   const handleReminderToggle = () => {
     if (!reminderEnabled) {
-      if (notificationsSupported && Notification.permission !== 'granted') {
-        Notification.requestPermission().then(permission => {
-          if (permission === 'granted') {
+      if (notificationsSupported && Notification.permission !== "granted") {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
             setReminderEnabled(true);
           }
         });
@@ -71,7 +76,7 @@ function WaterReminder() {
 
   const handleIntervalChange = (_event: Event, newValue: number | number[]) => {
     setReminderInterval(newValue as number);
-    localStorage.setItem('reminderInterval', (newValue as number).toString());
+    localStorage.setItem("reminderInterval", (newValue as number).toString());
   };
 
   const handleSnackbarClose = () => {
@@ -80,16 +85,14 @@ function WaterReminder() {
 
   return (
     <Box sx={{ mt: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <NotificationsActiveIcon sx={{ mr: 1, color: 'primary.main' }} />
-        <Typography variant="h6">
-          喝水提醒
-        </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <NotificationsActiveIcon sx={{ mr: 1, color: "primary.main" }} />
+        <Typography variant="h6">喝水提醒</Typography>
       </Box>
 
       {showIosNotice && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <InfoIcon sx={{ mr: 1 }} />
             <Typography>
               检测到iOS设备。由于iOS不支持网页通知，将使用应用内提醒替代。
@@ -121,11 +124,11 @@ function WaterReminder() {
             max={180}
             step={30}
             marks={[
-              { value: 30, label: '30分钟' },
-              { value: 60, label: '1小时' },
-              { value: 90, label: '1.5小时' },
-              { value: 120, label: '2小时' },
-              { value: 180, label: '3小时' }
+              { value: 30, label: "30分钟" },
+              { value: 60, label: "1小时" },
+              { value: 90, label: "1.5小时" },
+              { value: 120, label: "2小时" },
+              { value: 180, label: "3小时" },
             ]}
           />
         </Box>
@@ -143,7 +146,7 @@ function WaterReminder() {
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         message="该喝水了！保持水分很重要。"
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       />
     </Box>
   );
