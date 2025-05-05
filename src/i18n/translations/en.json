@@ -25,9 +25,9 @@
   "reminder": {
     "title": "Water Reminder",
     "enable": "Enable Reminder",
-    "interval": "Reminder Interval: {interval} minutes",
+    "interval": "Reminder Interval: {{interval}} minutes",
     "iosNotice": "iOS device detected. Web notifications are not supported on iOS, in-app reminders will be used instead.",
-    "lastReminder": "Last reminder time: {time}",
+    "lastReminder": "Last reminder time: {{time}}",
     "notification": "Time to drink water! Staying hydrated is important.",
     "intervals": {
       "30min": "30 min",

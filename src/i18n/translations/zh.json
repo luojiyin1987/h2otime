@@ -25,9 +25,9 @@
   "reminder": {
     "title": "喝水提醒",
     "enable": "启用提醒",
-    "interval": "提醒间隔: {interval} 分钟",
+    "interval": "提醒间隔: {{interval}} 分钟",
     "iosNotice": "检测到iOS设备。由于iOS不支持网页通知，将使用应用内提醒替代。",
-    "lastReminder": "上次提醒时间: {time}",
+    "lastReminder": "上次提醒时间: {{time}}",
     "notification": "该喝水了！保持水分很重要。",
     "intervals": {
       "30min": "30分钟",
